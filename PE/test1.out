@@ -1,0 +1,56 @@
+jshell> new NormalCab("SHA1234", 5)      
+$10 ==> SHA1234 (5 mins away) NormalCab
+jshell> new Booking(new NormalCab("SHA1234", 5), new JustRide(), new Request(20, 3, 1000))       
+$11 ==> $4.40 using SHA1234 (5 mins away) NormalCab (JustRide)
+jshell> new Booking(new NormalCab("SHA1234", 5), new TakeACab(), new Request(20, 3, 1000))
+$12 ==> $8.60 using SHA1234 (5 mins away) NormalCab (TakeACab)
+jshell> new NormalCab("SHA2345", 10)     
+$13 ==> SHA2345 (10 mins away) NormalCab
+jshell> new Booking(new NormalCab("SHA2345", 10), new JustRide(), new Request(10, 1, 900))
+$14 ==> $7.20 using SHA2345 (10 mins away) NormalCab (JustRide)
+jshell> new Booking(new NormalCab("SHA2345", 10), new TakeACab(), new Request(10, 1, 900))       
+$15 ==> $5.30 using SHA2345 (10 mins away) NormalCab (TakeACab)
+jshell> Comparable b1 = new Booking(new NormalCab("SHA2345", 10), new JustRide(), new Request(10, 1, 900))
+jshell> Booking b2 = new Booking(new NormalCab("SHA2345", 10), new TakeACab(), new Request(10, 1, 900))  
+jshell> b1.compareTo(b2) > 0     
+|  Warning:
+|  unchecked call to compareTo(T) as a member of the raw type java.lang.Comparable
+|  b1.compareTo(b2) > 0
+|  ^--------------^
+$18 ==> true
+jshell> Comparable b3 = new Booking(new NormalCab("SHA1234", 5), new JustRide(), new Request(10, 1, 900))        
+jshell> Booking b4 = new Booking(new NormalCab("SHA2345", 10), new JustRide(), new Request(10, 1, 900))  
+jshell> b3.compareTo(b4) < 0     
+|  Warning:
+|  unchecked call to compareTo(T) as a member of the raw type java.lang.Comparable
+|  b3.compareTo(b4) < 0
+|  ^--------------^
+$21 ==> true
+jshell> Car[] cs = {new NormalCab("X", 0), new NormalCab("Y", 5), new NormalCab("Z", 1000)}      
+jshell> Ride[] ss = {new JustRide(), new TakeACab()}
+jshell> Request[] rs = {new Request(1, 2, 1), new Request(9, 2, 559), new Request(27, 3, 600)};  
+jshell> List list = new ArrayList<>();   
+jshell> for (Car c: cs) for (Ride s: ss) for (Request r: rs) list.add(new Booking(c, s, r));     
+|  Warning:
+|  unchecked call to add(E) as a member of the raw type java.util.List
+|  for (Car c: cs) for (Ride s: ss) for (Request r: rs) list.add(new Booking(c, s, r));
+|                                                       ^----------------------------^
+jshell> Collections.sort(list);  
+|  Warning:
+|  unchecked method invocation: method sort in class java.util.Collections is applied to given types
+|    required: java.util.List<T>
+|    found: java.util.List
+|  Collections.sort(list);
+|  ^--------------------^
+|  Warning:
+|  unchecked conversion
+|    required: java.util.List<T>
+|    found:    java.util.List
+|  Collections.sort(list);
+|                   ^--^
+jshell> for (Booking b: list) System.out.println(b);     
+|  Error:
+|  incompatible types: java.lang.Object cannot be converted to Booking
+|  for (Booking b: list) System.out.println(b);
+|                  ^--^
+jshell> /exit
