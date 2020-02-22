@@ -1,0 +1,3 @@
+{
+    "java.checkstyle.configuration": "${workspaceFolder}/AssignmentPlus/cs2030_checks.xml"
+}
